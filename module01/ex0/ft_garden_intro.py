@@ -1,4 +1,4 @@
-#!/Users/yourname/.pyenv/versions/3.11.9/bin/python
+#!/Users/yoabied/.pyenv/versions/3.11.9/bin/python
 
 name = "Rose"
 height = "25cm"
