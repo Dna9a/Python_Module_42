@@ -9,9 +9,7 @@ class Plant:
         self.growth_rate: float = 0.8
 
     def show(self) -> None:
-        print(
-            f"{self.name.capitalize()}: {self.height}cm," f" {self.days_old} days old"
-        )
+        print(f"{self.name.capitalize()}: {self.height}cm," f" {self.days_old} days old")
 
     def grow(self) -> None:
         self.height = round(self.height + self.growth_rate, 1)
