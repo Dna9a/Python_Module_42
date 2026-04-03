@@ -20,11 +20,7 @@ class Plant:
 if __name__ == "__main__":
     print("=== Garden Plant Growth ===")
 
-    rose = Plant(
-        "Rose",
-        24.2,
-        29
-    )
+    rose = Plant("Rose", 24.2, 29)
 
     initial_height: float = rose.height
     for day in range(1, 8):
