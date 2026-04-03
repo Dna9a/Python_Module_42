@@ -25,4 +25,3 @@ if __name__ == "__main__":
     cactus.show()
     sunflower.show()
     fern.show()
-

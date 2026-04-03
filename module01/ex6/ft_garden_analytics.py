@@ -9,7 +9,9 @@ class Plant:
             self.show_count = 0
 
         def display(self) -> None:
-            print(f"Stats: {self.grow_count} grow, {self.age_count} age, {self.show_count} show")
+            print(
+                f"Stats: {self.grow_count} grow, {self.age_count} age, {self.show_count} show"
+            )
 
     def __init__(self, name: str, height: float, age: int) -> None:
         self.name = name
@@ -68,7 +70,9 @@ class Tree(Plant):
             self.shade_count = 0
 
         def display(self) -> None:
-            print(f"Stats: {self.grow_count} grow, {self.age_count} age, {self.show_count} show")
+            print(
+                f"Stats: {self.grow_count} grow, {self.age_count} age, {self.show_count} show"
+            )
             print(f"{self.shade_count} shade")
 
     def __init__(
