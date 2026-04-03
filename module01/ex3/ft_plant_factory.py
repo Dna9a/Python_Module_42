@@ -15,6 +15,12 @@ class Plant:
 
 
 '''
+Requirements:
+• Plants need to be created directly with their initial information (name, starting height, starting age)
+• Each plant should be ready to use immediately after construction (e.g., if you want to make it grow())
+• Create at least 5 different plants with varying characteristics
+• Display all created plants in an organized format
+
 === Plant Factory Output ===
 Created: Rose: 25.0cm, 30 days old
 Created: Oak: 200.0cm, 365 days old
