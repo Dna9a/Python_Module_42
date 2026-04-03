@@ -32,5 +32,6 @@ if __name__ == "__main__":
         rose.grow()
         rose.age()
         rose.show()
-    total_growth: float = round(rose.height - initial_height)
+    diff: float = rose.height - initial_height
+    total_growth: float = round(diff, 2)
     print(f"Growth this week: {total_growth}cm")
