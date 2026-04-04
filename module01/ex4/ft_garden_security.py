@@ -40,7 +40,8 @@ class Plant:
             self._age = age
 
     def show(self) -> None:
-        print(f"Plant created: {self._name}: {self._height}cm, {self._age} days old")
+        print(f"Plant created: {self._name}:",
+              f"{self._height}cm, {self._age} days old")
 
 
 if __name__ == "__main__":
@@ -54,5 +55,6 @@ if __name__ == "__main__":
     plant.set_height(-5)
     plant.set_age(-10)
     print(
-        f"Current state: {plant._name}: {plant.get_height()}cm, {plant.get_age()} days old"
+        f"Current state: {plant._name}:",
+        f"{plant.get_height()}cm, {plant.get_age()} days old",
     )
