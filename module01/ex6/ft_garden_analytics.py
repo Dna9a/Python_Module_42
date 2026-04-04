@@ -10,7 +10,7 @@ class Plant:
 
         def display(self) -> None:
             print(
-                f"Stats: {self.grow_count} grow,"
+                f"Stats: {self.grow_count} grow, "
                 f"{self.age_count} age, {self.show_count} show"
             )
 
@@ -19,6 +19,9 @@ class Plant:
         self.height = height
         self.__age = age
         self.__stats = Plant.__Stats()
+
+    def _get_age(self) -> int:
+        return self.__age
 
     @staticmethod
     def is_older_than_year(age: int) -> bool:
@@ -71,8 +74,10 @@ class Tree(Plant):
             self.shade_count = 0
 
         def display(self) -> None:
-            print(f"Stats: {self.grow_count} grow,"
-                  f"{self.age_count} age, {self.show_count} show")
+            print(
+                f"Stats: {self.grow_count} grow, "
+                f"{self.age_count} age, {self.show_count} show"
+            )
             print(f"{self.shade_count} shade")
 
     def __init__(
@@ -84,7 +89,7 @@ class Tree(Plant):
 
     def show(self) -> None:
         self._Tree__tree_stats.show_count += 1
-        print(f"{self.name}: {self.height:.1f}cm, {self._Plant__age} days old")
+        print(f"{self.name}: {self.height:.1f}cm, {self._get_age()} days old")
         print(f"Trunk diameter: {self.trunk_diameter:.1f}cm")
 
     def grow(self) -> None:
@@ -93,7 +98,7 @@ class Tree(Plant):
 
     def age(self) -> None:
         self._Tree__tree_stats.age_count += 1
-        self._Plant__age += 1
+        super().age()
 
     def produce_shade(self) -> None:
         self._Tree__tree_stats.shade_count += 1
