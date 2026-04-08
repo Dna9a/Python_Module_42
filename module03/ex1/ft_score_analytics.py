@@ -5,7 +5,9 @@ def main():
     print("=== Player Score Analytics ===")
 
     if len(sys.argv) <= 1:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ..."
+        )
         return
 
     scores = []
@@ -18,7 +20,9 @@ def main():
             print(f"Invalid parameter: '{arg}'")
 
     if not scores:
-        print("No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ...")
+        print(
+            "No scores provided. Usage: python3 ft_score_analytics.py <score1> <score2> ..."
+        )
         return
 
     total_players = len(scores)

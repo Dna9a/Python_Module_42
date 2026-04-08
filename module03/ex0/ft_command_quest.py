@@ -1,9 +1,9 @@
 import sys
 
 
-def ag():
+def arg() -> None:
     print("=== Command Quest ===")
-    program_name = sys.argv[0].split("/")[-1]
+    program_name = sys.argv[0]
     print(f"Program name: {program_name}")
     num_args = len(sys.argv) - 1
     if num_args == 0:
@@ -17,4 +17,4 @@ def ag():
 
 
 if __name__ == "__main__":
-    ag()
+    arg()
