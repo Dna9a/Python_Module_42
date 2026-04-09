@@ -5,21 +5,19 @@ def get_player_pos(prompt):
     while True:
         try:
             user_input = input(prompt)
-            # Split by comma and strip whitespace
             parts = [p.strip() for p in user_input.split(",")]
 
             if len(parts) != 3:
                 print("Invalid syntax")
                 continue
 
-            # Try to convert each part to float
             coords = []
             for p in parts:
                 try:
                     coords.append(float(p))
                 except ValueError as e:
                     print(f"Error on parameter '{p}': {e}")
-                    raise ValueError("Retry")  # Jump back to loop start
+                    raise ValueError("Retry")
 
             return tuple(coords)
 
@@ -34,24 +32,22 @@ def calculate_distance(p1, p2):
 
 
 def main():
-    print("=== Game Coordinate System ===")
-
-    # First set of coordinates
+    print("=== Game Coordinate System ===\n")
     print("Get a first set of coordinates")
-    pos1 = get_player_pos("Enter new coordinates as floats in format 'x,y,z': ")
-    print(f"Got a first tuple: {pos1}")
-    print(f"It includes: X={pos1[0]}, Y={pos1[1]}, Z={pos1[2]}")
 
-    # Distance to center
-    dist_to_center = calculate_distance(pos1, (0.0, 0.0, 0.0))
-    print(f"Distance to center: {dist_to_center:.4f}")
+    pause_flow = get_player_pos("Enter new coordinates as floats in format 'x,y,z': ")
 
-    # Second set of coordinates
-    print("Get a second set of coordinates")
+    print(f"Got a first tuple: {pause_flow}")
+    print(f"It includes: X={pause_flow[0]}, Y={pause_flow[1]}, Z={pause_flow[2]}")
+
+    dst_to_center = calculate_distance(pause_flow, (0.0, 0.0, 0.0))
+
+    print(f"Distance to center: {dst_to_center:.4f}")
+    print("\nGet a second set of coordinates")
+
     pos2 = get_player_pos("Enter new coordinates as floats in format 'x,y,z': ")
+    dist_between = calculate_distance(pause_flow, pos2)
 
-    # Distance between them
-    dist_between = calculate_distance(pos1, pos2)
     print(f"Distance between the 2 sets of coordinates: {dist_between:.4f}")
 
 
