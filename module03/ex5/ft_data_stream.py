@@ -3,7 +3,16 @@ import random
 
 def gen_event():
     players = ["alice", "bob", "charlie", "dylan"]
-    actions = ["run", "eat", "sleep", "grab", "move", "climb", "swim", "use", "release"]
+    actions = [
+        "run",
+        "eat",
+        "sleep",
+        "grab",
+        "move",
+        "climb",
+        "swim",
+        "use",
+        "release"]
     while True:
         yield (random.choice(players), random.choice(actions))
 

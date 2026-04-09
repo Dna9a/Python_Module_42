@@ -1,5 +1,3 @@
-import random
-
 ACHIEVEMENTS_LIST = [
     "Crafting Genius",
     "World Savior",
