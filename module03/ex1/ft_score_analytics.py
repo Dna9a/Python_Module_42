@@ -38,7 +38,7 @@ def main():
     print(f"Average score: {average_score}")
     print(f"High score: {high_score}")
     print(f"Low score: {low_score}")
-    print(f"Score range: {score_range}")
+    print(f"Score range: {score_range}\n")
 
 
 if __name__ == "__main__":

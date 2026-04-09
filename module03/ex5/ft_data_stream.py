@@ -1,10 +1,6 @@
 import random
 
 def gen_event():
-    """
-    Infinite generator as defined in the exercise.
-    Returns (name, action) tuples.
-    """
     players = ["alice", "bob", "charlie", "dylan"]
     actions = ["run", "eat", "sleep", "grab", "move", "climb", "swim", "use", "release"]
     while True:

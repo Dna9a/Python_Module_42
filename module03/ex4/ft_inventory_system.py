@@ -1,5 +1,6 @@
 import sys
 
+
 def main():
     if len(sys.argv) == 1:
         print("At the beginning of the game, your inventory is usually empty ;)")
@@ -33,8 +34,6 @@ def main():
             print(f"Quantity error for '{item_name}': invalid literal for int() with base 10: '{quantity_str}'")
 
     if not inventory:
-        # Note: The example shows the message even if some invalid parameters were processed
-        # but the dictionary ended up empty.
         return
 
     print(f"Got inventory: {inventory}")
@@ -47,7 +46,6 @@ def main():
         percentage = (inventory[item] / total_quantity) * 100
         print(f"Item {item} represents {percentage:.1f}%")
 
-    # Most and least abundant (first from CLI in case of tie)
     most_abundant = item_order[0]
     least_abundant = item_order[0]
 
@@ -62,6 +60,7 @@ def main():
 
     inventory["magic_item"] = 1
     print(f"Updated inventory: {inventory}")
+
 
 if __name__ == "__main__":
     main()
