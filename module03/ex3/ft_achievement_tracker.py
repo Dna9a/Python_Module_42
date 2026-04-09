@@ -1,56 +1,93 @@
 import random
 
 ACHIEVEMENTS_LIST = [
+    "Crafting Genius",
+    "World Savior",
+    "Master Explorer",
+    "Collector Supreme",
+    "Untouchable",
+    "Boss Slayer",
+    "Strategist",
+    "Speed Runner",
+    "Survivor",
+    "Treasure Hunter",
     "First Steps",
-    "Novice Explorer",
-    "Data Miner",
-    "Code Warrior",
-    "Logic Master",
-    "Bug Hunter",
-    "Loop Specialist",
-    "Function Guru",
-    "List Wizard",
-    "Tuple Traveler",
-    "Set Sentinel",
-    "Exception Expert",
-    "Math Magician",
-    "Command Commander",
-    "Analytics Ace",
-    "Quest Champion",
+    "Sharp Mind",
+    "Unstoppable",
+    "Hidden Path Finder",
 ]
 
 
-def gen_player_achievements():
-    num_to_pick = random.randint(1, len(ACHIEVEMENTS_LIST))
-    return set(random.sample(ACHIEVEMENTS_LIST, num_to_pick))
+def gen_player_achievements(name):
+    lista = {
+        "Alice": {
+            "Crafting Genius",
+            "World Savior",
+            "Master Explorer",
+            "Collector Supreme",
+            "Untouchable",
+            "Boss Slayer",
+        },
+        "Bob": {
+            "Crafting Genius",
+            "Strategist",
+            "World Savior",
+            "Master Explorer",
+            "Unstoppable",
+            "Collector Supreme",
+            "Untouchable",
+        },
+        "Charlie": {
+            "Strategist",
+            "Speed Runner",
+            "Survivor",
+            "Master Explorer",
+            "Treasure Hunter",
+            "First Steps",
+            "Collector Supreme",
+            "Untouchable",
+            "Sharp Mind",
+        },
+        "Dylan": {
+            "Strategist",
+            "Speed Runner",
+            "Unstoppable",
+            "Untouchable",
+            "Boss Slayer",
+        },
+    }
+    return lista.get(name, set())
 
 
 def main():
     print("=== Achievement Tracker System ===")
 
-    player_names = ["Player 1", "Player 2", "Player 3", "Player 4"]
-    players = {name: gen_player_achievements() for name in player_names}
+    player_names = ["Alice", "Bob", "Charlie", "Dylan"]
+    players = {name: gen_player_achievements(name) for name in player_names}
 
-    all_unlocked = set().union(*players.values())
-    print(f"Total Unique Achievements among all players: {len(all_unlocked)}")
+    for name in player_names:
+        print(f"Player {name}: {players[name]}")
 
-    shared_by_all = set(players["Player 1"]).intersection(
+    all_distinct = set().union(*players.values())
+    print(f"All distinct achievements: {all_distinct}")
+
+    common = set(players["Alice"]).intersection(
         *(players[name] for name in player_names[1:])
     )
-    print(f"Achievements shared by ALL: {shared_by_all}")
+    print(f"Common achievements: {common}")
 
-    for name, achs in players.items():
-        print(f"\n--- Analysis for {name} ---")
-
-        others_achs = set().union(
+    for name in player_names:
+        achs = players[name]
+        others_union = set().union(
             *(p_achs for p_name, p_achs in players.items() if p_name != name)
         )
+        only_this_player = achs.difference(others_union)
+        print(f"Only {name} has: {only_this_player}")
 
-        unique_to_player = achs.difference(others_achs)
-        print(f"Unique achievements: {unique_to_player}")
-
+    for name in player_names:
+        achs = players[name]
         missing = set(ACHIEVEMENTS_LIST).difference(achs)
-        print(f"Missing achievements: {missing}")
+        print(f"{name} is missing: {missing}")
 
 
 if __name__ == "__main__":

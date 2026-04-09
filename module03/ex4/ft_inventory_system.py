@@ -1,6 +1,5 @@
 import sys
 
-
 def main():
     if len(sys.argv) == 1:
         print("At the beginning of the game, your inventory is usually empty ;)")
@@ -30,11 +29,12 @@ def main():
             quantity = int(quantity_str)
             inventory[item_name] = quantity
             item_order.append(item_name)
-        except ValueError as e:
-            print(f"Quantity error for '{item_name}': {e}")
+        except ValueError:
+            print(f"Quantity error for '{item_name}': invalid literal for int() with base 10: '{quantity_str}'")
 
     if not inventory:
-        print("At the beginning of the game, your inventory is usually empty ;)")
+        # Note: The example shows the message even if some invalid parameters were processed
+        # but the dictionary ended up empty.
         return
 
     print(f"Got inventory: {inventory}")
@@ -57,17 +57,11 @@ def main():
         if inventory[item] < inventory[least_abundant]:
             least_abundant = item
 
-    print(
-        f"Item most abundant: {most_abundant} with quantity {inventory[most_abundant]}"
-    )
-    print(
-        f"Item least abundant: {least_abundant} with quantity {inventory[least_abundant]}"
-    )
+    print(f"Item most abundant: {most_abundant} with quantity {inventory[most_abundant]}")
+    print(f"Item least abundant: {least_abundant} with quantity {inventory[least_abundant]}")
 
     inventory["magic_item"] = 1
     print(f"Updated inventory: {inventory}")
 
-
 if __name__ == "__main__":
     main()
-
