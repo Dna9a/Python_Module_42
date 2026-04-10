@@ -44,7 +44,7 @@ def main():
     result = secure_archive(temp_file)
     print(result)
 
-    print("Using 'secure_archive' to write previous content to a new file:")
+    print("\nUsing 'secure_archive' to write previous content to a new file:")
     if result[0]:
         print(secure_archive("vault_ba"
                              "ckup.txt", action="write", content=result[1]))
