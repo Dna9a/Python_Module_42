@@ -10,14 +10,15 @@ def secure_archive(
             with open(file_name, "r") as f:
                 data = f.read()
             return (True, data)
+    except OSError as e:
+        return (
+            False,
+            f"[{e.errno}] {e.strerror}: '{file_name}'",
+        )
     except Exception as e:
         return (
             False,
-            (
-                f"[{e.errno}] {e.strerror}: '{file_name}'"
-                if hasattr(e, "errno")
-                else str(e)
-            ),
+            str(e),
         )
 
 
@@ -43,9 +44,10 @@ def main():
     result = secure_archive(temp_file)
     print(result)
 
-    print("\nUsing 'secure_archive' to write previous content to a new file:")
+    print("Using 'secure_archive' to write previous content to a new file:")
     if result[0]:
-        print(secure_archive("vault_backup" ".txt", action="write", content=result[1]))
+        print(secure_archive("vault_ba"
+                             "ckup.txt", action="write", content=result[1]))
 
 
 if __name__ == "__main__":
