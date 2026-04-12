@@ -22,7 +22,6 @@ class DataProcessor(ABC):
         data = self.internal.pop(0)
         rank = self.processing_rank
         self.processing_rank += 1
-        self.total_processed += 1
         return rank, data
 
 
@@ -37,8 +36,10 @@ class NumericProcessor(DataProcessor):
             raise ValueError("Improper numeric data")
         if isinstance(data, list):
             self.internal += [str(item) for item in data]
+            self.total_processed += len(data)
         else:
             self.internal.append(str(data))
+            self.total_processed += 1
 
 
 class TextProcessor(DataProcessor):
@@ -52,8 +53,10 @@ class TextProcessor(DataProcessor):
             raise ValueError("Improper text data")
         if isinstance(data, list):
             self.internal += data
+            self.total_processed += len(data)
         else:
             self.internal.append(data)
+            self.total_processed += 1
 
 
 class LogProcessor(DataProcessor):
@@ -78,9 +81,11 @@ class LogProcessor(DataProcessor):
             for entry in data:
                 formatted_log = ": ".join(entry.values())
                 self.internal.append(formatted_log)
+                self.total_processed += 1
         else:
             formatted_log = ": ".join(data.values())
             self.internal.append(formatted_log)
+            self.total_processed += 1
 
 
 class DataStream:
