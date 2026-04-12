@@ -1,6 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any
-import typing
+from typing import Any, Protocol
 
 
 class DataProcessor(ABC):
@@ -88,6 +87,53 @@ class LogProcessor(DataProcessor):
             self.total_processed += 1
 
 
+class ExportPlugin(Protocol):
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        pass
+
+
+class Json:
+    def validate(self, data: Any) -> bool:
+        if not isinstance(data, list):
+            return False
+        return all(
+            isinstance(item, tuple)
+            and len(item) == 2
+            and isinstance(item[0], int)
+            and isinstance(item[1], str)
+            for item in data
+        )
+
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        if not self.validate(data):
+            raise ValueError("Invalid format for Json plugin")
+        import json
+
+        json_dict = {f"item_{rank}": content for rank, content in data}
+        print("JSON Output:")
+        print(json.dumps(json_dict, indent=None))
+
+
+class Csv:
+    def validate(self, data: Any) -> bool:
+        if not isinstance(data, list):
+            return False
+        return all(
+            isinstance(item, tuple)
+            and len(item) == 2
+            and isinstance(item[0], int)
+            and isinstance(item[1], str)
+            for item in data
+        )
+
+    def process_output(self, data: list[tuple[int, str]]) -> None:
+        if not self.validate(data):
+            raise ValueError("Invalid format for Csv plugin")
+        print("CSV Output:")
+        # The briefing implies a comma-separated list of values on one line
+        print(",".join(content for _, content in data))
+
+
 class DataStream:
     def __init__(self) -> None:
         self.processors: list[DataProcessor] = []
@@ -95,7 +141,7 @@ class DataStream:
     def register_processor(self, pros: DataProcessor) -> None:
         self.processors.append(pros)
 
-    def process_stream(self, stream: list[typing.Any]) -> None:
+    def process_stream(self, stream: list[Any]) -> None:
         for element in stream:
             processed = False
             for processor in self.processors:
@@ -108,7 +154,7 @@ class DataStream:
                 print(f"{msg}{element}")
 
     def print_processors_stats(self) -> None:
-        print("== DataStream statistics ==")
+        print("\n== DataStream statistics ==")
         if not self.processors:
             print("No processor found, no data\n")
             return
@@ -120,50 +166,92 @@ class DataStream:
                 f"processed, remaining {len(processor.internal)} on processor"
             )
 
+    def output_pipeline(self, nb: int, plugin: ExportPlugin) -> None:
+        """
+        Extract nb elements from each processor and send them to the plugin.
+        """
+        for processor in self.processors:
+            processor_output: list[tuple[int, str]] = []
+            count = 0
+            while count < nb and processor.internal:
+                processor_output.append(processor.output())
+                count += 1
+            if processor_output:
+                plugin.process_output(processor_output)
+
 
 if __name__ == "__main__":
-    print("=== Code Nexus - Data Stream ===\n")
+    print("=== Code Nexus - Data Pipeline ===\n")
     print("Initialize Data Stream...")
     ds = DataStream()
     ds.print_processors_stats()
 
-    print("Registering Numeric Processor\n")
+    print("Registering Processors\n")
     num_proc = NumericProcessor()
-    ds.register_processor(num_proc)
+    text_proc = TextProcessor()
+    log_proc = LogProcessor()
 
-    test_batch = [
+    ds.register_processor(num_proc)
+    ds.register_processor(text_proc)
+    ds.register_processor(log_proc)
+
+    test_batch_1 = [
         "Hello world",
         [3.14, -1, 2.71],
         [
-            {"log_level": "WARNING", "log_message": "Telnet access! Use ssh instead"},
+            {
+                "log_level": "WARNING",
+                "log_message": "Telnet access" "! Use ssh instead",
+            },
             {"log_level": "INFO", "log_message": "User wil is connected"},
         ],
         42,
         ["Hi", "five"],
     ]
 
-    print("Send first batch of data on stream: " + str(test_batch))
-    ds.process_stream(test_batch)
-    ds.print_processors_stats()
-
-    print("\nRegistering other data processors")
-    text_proc = TextProcessor()
-    log_proc = LogProcessor()
-    ds.register_processor(text_proc)
-    ds.register_processor(log_proc)
-
-    print("Send the same batch again")
-    ds.process_stream(test_batch)
-    ds.print_processors_stats()
-
-    print(
-        "\nConsume some elements from the data processors: " "Numeric 3, Text 2, Log 1"
+    batch_1_msg = (
+        "Send first batch of data on stream: ['Hello world', "
+        "[3.14, -1, 2.71], [{'log_level': 'WARNING', "
+        "'log_message': 'Telnet access! Use ssh instead'}, "
+        "{'log_level': 'INFO', 'log_message': "
+        "'User wil is connected'}], 42, ['Hi', 'five']]"
     )
-    for _ in range(3):
-        num_proc.output()
-    for _ in range(2):
-        text_proc.output()
-    for _ in range(1):
-        log_proc.output()
+    print(f"{batch_1_msg}\n")
+    ds.process_stream(test_batch_1)
     ds.print_processors_stats()
 
+    msg_csv = "Send 3 processed data from each processor to a CSV plugin:"
+    print(f"\n{msg_csv}")
+    csv_plugin = Csv()
+    ds.output_pipeline(3, csv_plugin)
+    ds.print_processors_stats()
+
+    test_batch_2 = [
+        21,
+        ["I love AI", "LLMs are wonderful", "Stay healthy"],
+        [
+            {"log_level": "ERROR", "log_message": "500 server crash"},
+            {"log_level": "NOTICE", "log_message": "Certificate expires in 10 days"},
+        ],
+        [32, 42, 64, 84, 128, 168],
+        "World hello",
+    ]
+
+    batch_2_msg = (
+        "Send another batch of data: [21, ['I love AI', "
+        "'LLMs are wonderful', 'Stay healthy'], "
+        "[{'log_level': 'ERROR', 'log_message': '500 server crash'}, "
+        "{'log_level': 'NOTICE', 'log_message': "
+        "'Certificate expires in 10 days'}], "
+        "[32, 42, 64, 84, 128, 168], "
+        "'World hello']"
+    )
+    print(f"\n{batch_2_msg}")
+    ds.process_stream(test_batch_2)
+    ds.print_processors_stats()
+
+    msg_json = "Send 5 processed data from each processor to a JSON plugin:"
+    print(f"\n{msg_json}")
+    json_plugin = Json()
+    ds.output_pipeline(5, json_plugin)
+    ds.print_processors_stats()
