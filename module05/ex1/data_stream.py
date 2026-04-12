@@ -127,9 +127,10 @@ if __name__ == "__main__":
         "Hello world",
         [3.14, -1, 2.71],
         [
-            {"log_level": "WARNING",
-             "log_message": "Telnet access! Use ssh instead"},
-            {"log_level": "INFO", "log_message": "User wil is connected"},
+            {"log_level": "WARNING", "log_messa"
+             "ge": "Telnet ""access! Use ssh instead"},
+            {"log_level": "INFO", "log_messag"
+             "e": "User wil is connected"},
         ],
         42,
         ["Hi", "five"],
@@ -150,8 +151,8 @@ if __name__ == "__main__":
     ds.print_processors_stats()
 
     print(
-        "\nConsume some elements from the data processors: "
-        "Numeric 3, Text 2, Log 1"
+        "\nConsume some elements from the data proce"
+        "ssors: " "Numeric 3, Text 2, Log 1"
     )
     for _ in range(3):
         num_proc.output()
