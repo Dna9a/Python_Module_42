@@ -6,6 +6,7 @@ class DataProcessor(ABC):
     def __init__(self) -> None:
         self.internal: list[str] = []
         self.processing_rank = 0
+        self.total_processed = 0
 
     @abstractmethod
     def validate(self, data: Any) -> bool:
@@ -21,6 +22,7 @@ class DataProcessor(ABC):
         data = self.internal.pop(0)
         rank = self.processing_rank
         self.processing_rank += 1
+        self.total_processed += 1
         return rank, data
 
 
