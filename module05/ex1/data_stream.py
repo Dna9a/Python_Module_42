@@ -82,6 +82,7 @@ class LogProcessor(DataProcessor):
             formatted_log = ": ".join(data.values())
             self.internal.append(formatted_log)
 
+
 class DataStream:
     def __init__(self) -> None:
         self.processors: list[DataProcessor] = []
