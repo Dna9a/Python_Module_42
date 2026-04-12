@@ -65,7 +65,8 @@ class LogProcessor(DataProcessor):
             return all(
                 isinstance(item, dict)
                 and all(
-                    isinstance(k, str) and isinstance(v, str) for k, v in item.items()
+                    isinstance(k, str) and isinstance(v, str)
+                    for k, v in item.items()
                 )
                 for item in data
             )
@@ -231,7 +232,10 @@ if __name__ == "__main__":
         ["I love AI", "LLMs are wonderful", "Stay healthy"],
         [
             {"log_level": "ERROR", "log_message": "500 server crash"},
-            {"log_level": "NOTICE", "log_message": "Certificate expires in 10 days"},
+            {
+                "log_level": "NOTICE",
+                "log_message": "Certificate expires in 10 days"
+            },
         ],
         [32, 42, 64, 84, 128, 168],
         "World hello",
