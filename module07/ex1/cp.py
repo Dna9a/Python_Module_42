@@ -1,7 +1,6 @@
 from abc import ABC, abstractmethod
-
-from module07.ex0.battle import Creature
-from module07.ex0.battle import CreatureFactory
+from ex0.bb import Creature
+from ex0.bb import CreatureFactory
 
 
 class HealCapability(ABC):
@@ -94,50 +93,3 @@ class TransformCreatureFactory(CreatureFactory):
 
     def create_evolved(self) -> Creature:
         return Morphagon()
-
-
-def _test_healing_family() -> None:
-    print("Testing Creature with healing capability")
-    factory = HealingCreatureFactory()
-    base = factory.create_base()
-    evolved = factory.create_evolved()
-
-    print("base:")
-    print(base.describe())
-    print(base.attack())
-    print(base.heal())
-
-    print("evolved:")
-    print(evolved.describe())
-    print(evolved.attack())
-    print(evolved.heal())
-
-
-def _test_transform_family() -> None:
-    print("Testing Creature with transform capability")
-    factory = TransformCreatureFactory()
-    base = factory.create_base()
-    evolved = factory.create_evolved()
-
-    print("base:")
-    print(base.describe())
-    print(base.attack())
-    print(base.transform())
-    print(base.attack())
-    print(base.revert())
-
-    print("evolved:")
-    print(evolved.describe())
-    print(evolved.attack())
-    print(evolved.transform())
-    print(evolved.attack())
-    print(evolved.revert())
-
-
-def main() -> None:
-    _test_healing_family()
-    _test_transform_family()
-
-
-if __name__ == "__main__":
-    main()
