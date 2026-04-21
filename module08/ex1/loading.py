@@ -43,7 +43,8 @@ def print_dependency_status():
 def print_environment_comparison():
     """Show quick pip vs Poetry installation hints and runtime context."""
     is_poetry_like = (
-        "poetry" in sys.executable.lower() or "pypoetry" in sys.executable.lower()
+        "poetry" in sys.executable.lower() or "pypoetry"
+        "" in sys.executable.lower()
     )
 
     print()
@@ -71,7 +72,8 @@ def print_missing_instructions(missing):
 
 
 def run_analysis(pandas_module, numpy_module, matplotlib_module):
-    """Build Matrix-like data with numpy, analyze with pandas, and visualize."""
+    """Build Matrix-like data with numpy,"
+    " analyze with pandas, and visualize."""
     print()
     print("Analyzing Matrix data...")
 
@@ -80,19 +82,25 @@ def run_analysis(pandas_module, numpy_module, matplotlib_module):
     ticks = numpy_module.arange(points)
     signal = numpy_module.sin(ticks / 28.0) + rng.normal(0, 0.35, size=points)
 
-    data = pandas_module.DataFrame({"tick": ticks, "signal": signal})
-    data["rolling_mean"] = data["signal"].rolling(window=25, min_periods=1).mean()
+    data = pandas_module.DataFrame({"tick"
+                                    "": ticks, "signal": signal})
+    data["rolling_mean"] = data[
+        "signal"
+        ].rolling(window=25, min_periods=1).mean()
 
     print(f"Processing {len(data)} data points...")
     print("Generating visualization...")
-
     pyplot = matplotlib_module.pyplot
     pyplot.figure(figsize=(10, 5))
     pyplot.plot(
-        data["tick"], data["signal"], linewidth=0.8, alpha=0.55, label="Raw signal"
+        data["tick"], data[
+            "signal"
+            ], linewidth=0.8, alpha=0.55, label="Raw signal"
     )
     pyplot.plot(
-        data["tick"], data["rolling_mean"], linewidth=2.0, label="Rolling mean (25)"
+        data["tick"], data[
+            "rolling_mean"
+            ], linewidth=2.0, label="Rolling mean (25)"
     )
     pyplot.title("Matrix Signal Analysis")
     pyplot.xlabel("Tick")

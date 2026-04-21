@@ -4,20 +4,17 @@ import site
 
 
 def detect_virtual_environment():
-    """Detect if running inside a virtual environment"""
     return hasattr(sys, "real_prefix") or (
         hasattr(sys, "base_prefix") and sys.base_prefix != sys.prefix
     )
 
 
 def get_venv_name():
-    """Extract virtual environment name from path"""
     venv_path = sys.prefix
     return os.path.basename(venv_path)
 
 
 def get_site_packages():
-    """Get site-packages directory path"""
     return site.getsitepackages()[0] if site.getsitepackages() else "Not found"
 
 
@@ -27,7 +24,7 @@ def main():
     if in_venv:
         print("Inside the Construct")
         print()
-        print(f"MATRIX STATUS: Welcome to the construct")
+        print("MATRIX STATUS: Welcome to the construct")
         print(f"Current Python: {sys.executable}")
         print(f"Virtual Environment: {get_venv_name()}")
         print(f"Environment Path: {sys.prefix}")
@@ -41,7 +38,7 @@ def main():
     else:
         print("Outside the Matrix")
         print()
-        print(f"MATRIX STATUS: You're still plugged in")
+        print("MATRIX STATUS: You're still plugged in")
         print(f"Current Python: {sys.executable}")
         print("Virtual Environment: None detected")
         print()
