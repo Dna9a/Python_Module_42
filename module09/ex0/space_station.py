@@ -28,7 +28,7 @@ def main() -> None:
         crew_size=6,
         power_level=85.5,
         oxygen_level=92.3,
-        last_maintenance="2026-04-20T15:30:00",
+        last_maintenance=datetime(2026, 4, 20, 15, 30, 0),
         notes="Galek all systems are nominal.",
     )
 
@@ -54,7 +54,7 @@ def main() -> None:
             crew_size=25,
             power_level=76.0,
             oxygen_level=88.5,
-            last_maintenance="2026-04-19T09:10:00",
+            last_maintenance=datetime(2026, 4, 19, 9, 10, 0),
         )
     except ValidationError as exc:
         print(exc.errors()[0]["msg"])
