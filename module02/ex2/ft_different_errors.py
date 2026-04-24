@@ -7,7 +7,7 @@ def garden_operations(operation_number: int) -> None:
         with open("/non/existent/file", "r"):
             pass
     elif operation_number == 3:
-        "hamid" + 42
+        raise TypeError("Cannot add str and int")
     else:
         pass
 

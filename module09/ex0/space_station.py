@@ -1,4 +1,8 @@
-from pydantic import BaseModel, Field, ValidationError
+from pydantic import (  # type: ignore[import-not-found]
+    BaseModel,
+    Field,
+    ValidationError,
+)
 from typing import Optional
 from datetime import datetime
 
@@ -35,7 +39,9 @@ def main() -> None:
     print(f"Crew: {valid_station.crew_size} people")
     print(f"Power: {valid_station.power_level}%")
     print(f"Oxygen: {valid_station.oxygen_level}%")
-    status = "Operational" if valid_station.is_operational else "Non-operational"
+    status = (
+        "Operational" if valid_station.is_operational else "Non-operational"
+    )
     print(f"Status: {status}")
     print("")
     print("=" * 40)

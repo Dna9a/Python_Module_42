@@ -1,14 +1,15 @@
 from __future__ import annotations
-
 from datetime import datetime
 from enum import Enum
-
-from pydantic import BaseModel, Field, ValidationError, model_validator
+from pydantic import (  # type: ignore[import-not-found]
+    BaseModel,
+    Field,
+    ValidationError,
+    model_validator,
+)
 
 
 class Rank(str, Enum):
-    """Allowed mission crew ranks."""
-
     CADET = "cadet"
     OFFICER = "officer"
     LIEUTENANT = "lieutenant"
@@ -17,8 +18,6 @@ class Rank(str, Enum):
 
 
 class CrewMember(BaseModel):
-    """Single crew member participating in a space mission."""
-
     member_id: str = Field(..., min_length=3, max_length=10)
     name: str = Field(..., min_length=2, max_length=50)
     rank: Rank
@@ -51,8 +50,7 @@ class SpaceMission(BaseModel):
         )
         if not has_senior_officer:
             raise ValueError(
-                "Mission must have at least one Commander "
-                "or Captain"
+                "Mission must have at least one Commander or Captain"
             )
 
         if self.duration_days > 365:
@@ -153,7 +151,8 @@ def main() -> None:
     print("Crew members:")
     for member in mission.crew:
         print(
-            f"- {member.name} ({member.rank.value}) - {member.specialization}"
+            f"- {member.name} ({member.rank.value}) "
+            f"- {member.specialization}"
         )
     print(separator)
 
