@@ -1,8 +1,11 @@
-"""Demonstrate decorators and static methods."""
-
 from functools import wraps
 import time
 from typing import Any, Callable
+
+BLUE = "\033[44m\033[38;2;5;5;5m"
+RST = "\033[0m"
+
+"""Demonstrate decorators and static methods."""
 
 
 def spell_timer(func: Callable) -> Callable:
@@ -95,13 +98,13 @@ def unstable_spell() -> str:
 
 
 if __name__ == "__main__":
-    print("Testing spell timer...")
+    print(f"{BLUE}Testing spell timer...{RST}")
     print(f"Result: {fireball()}")
 
-    print("Testing retrying spell...")
+    print(f"{BLUE}Testing retrying spell...{RST}")
     print(unstable_spell())
 
-    print("Testing MageGuild...")
+    print(f"{BLUE}Testing MageGuild...{RST}")
     print(MageGuild.validate_mage_name("Merlin"))
     print(MageGuild.validate_mage_name("X1"))
     guild = MageGuild()

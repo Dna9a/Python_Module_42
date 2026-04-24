@@ -1,12 +1,13 @@
-"""Demonstrate reduce, partial, lru_cache, and singledispatch usage."""
-
 from functools import lru_cache, partial, reduce, singledispatch
 import operator
 from typing import Any, Callable
 
 
+BLUE = "\033[44m\033[38;2;5;5;5m"
+RST = "\033[0m"
+
+
 def spell_reducer(spells: list[int], operation: str) -> int:
-    """Reduce spell powers with the selected operation."""
     if not spells:
         return 0
 
@@ -26,7 +27,6 @@ def spell_reducer(spells: list[int], operation: str) -> int:
 def partial_enchanter(
     base_enchantment: Callable[[int, str, str], str],
 ) -> dict[str, Callable[[str], str]]:
-    """Create specialized enchantments with pre-filled power and element."""
     return {
         "fire": partial(base_enchantment, 50, "fire"),
         "ice": partial(base_enchantment, 50, "ice"),
@@ -36,7 +36,6 @@ def partial_enchanter(
 
 @lru_cache(maxsize=None)
 def memoized_fibonacci(n: int) -> int:
-    """Return the nth Fibonacci number with memoization."""
     if n < 0:
         raise ValueError("n must be >= 0")
     if n < 2:
@@ -45,8 +44,6 @@ def memoized_fibonacci(n: int) -> int:
 
 
 def spell_dispatcher() -> Callable[[Any], str]:
-    """Return a single-dispatch spell handler."""
-
     @singledispatch
     def dispatch(spell: Any) -> str:
         return "Unknown spell type"
@@ -67,31 +64,30 @@ def spell_dispatcher() -> Callable[[Any], str]:
 
 
 def enchant(power: int, element: str, target: str) -> str:
-    """Base enchantment used for partial application demo."""
     return f"{element.title()} enchantment on {target} at {power} power"
 
 
 if __name__ == "__main__":
-    print("Testing spell reducer...")
+    print(f"{BLUE}Testing spell reducer...{RST}")
     values = [10, 20, 30, 40]
     print(f"Sum: {spell_reducer(values, 'add')}")
     print(f"Product: {spell_reducer(values, 'multiply')}")
     print(f"Max: {spell_reducer(values, 'max')}")
 
-    print("Testing partial enchanter...")
+    print(f"{BLUE}Testing partial enchanter...{RST}")
     enchanted = partial_enchanter(enchant)
     print(enchanted["fire"]("Dragon"))
     print(enchanted["ice"]("Golem"))
     print(enchanted["lightning"]("Wraith"))
 
-    print("Testing memoized fibonacci...")
+    print(f"{BLUE}Testing memoized fibonacci...{RST}")
     print(f"Fib(0): {memoized_fibonacci(0)}")
     print(f"Fib(1): {memoized_fibonacci(1)}")
     print(f"Fib(10): {memoized_fibonacci(10)}")
     print(f"Fib(15): {memoized_fibonacci(15)}")
     print(f"Cache info: {memoized_fibonacci.cache_info()}")
 
-    print("Testing spell dispatcher...")
+    print(f"{BLUE}Testing spell dispatcher...{RST}")
     dispatch = spell_dispatcher()
     print(dispatch(42))
     print(dispatch("fireball"))
