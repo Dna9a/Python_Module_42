@@ -219,3 +219,10 @@ print(banana)       # banana was never created
 Last but not - least 
 
 - `Exception` is used as a **safety net** — it catches everything. This is fine for small scripts, but in bigger programs you'd be more specific so you don't accidentally hide unexpected bugs.
+
+
+
+
+# THIS README IS STILL UNDERCONSTRUCTION 
+
+![Builder](https://github.com/Dna9a/Repo-s_assets/blob/main/B2R/lbenay.gif)
